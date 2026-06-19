@@ -1,0 +1,64 @@
+
+.timed-orb-appear {
+  animation: sparkAppear 0.6s ease-out forwards !important;
+}
+
+.timed-orb-disappear {
+  animation: sparkDisappear 0.4s ease-in forwards !important;
+}
+
+.bubble {
+    position: absolute;
+}
+
+/* The black mask covering the scene in every level */
+#mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  /* background: radial-gradient(circle 200px at center, transparent 80px, black 120px); */
+  z-index: 1;
+  pointer-events: none; /*ensure clicks go through the mask*/
+}
+
+/* The halo that makes sparks */
+.sparkler {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 1px;
+	height: 1px;
+  bottom: 50%;
+	/* transform: translate(-50%, -50%) rotate(-25deg); */
+	border-radius: 50%;
+	/* box-shadow: 0 0 2500px 60px var(--color-spark); */
+  box-shadow: 0 0 250px 20px white, 
+              0 0 100px 30px gold;
+  z-index: 2;
+  animation: blinkIt 2s infinite;
+}
+
+
+/* Flame that is the center bright dot of the sparkler halo */
+.flame {
+  width: 10px;
+  height: 10.3px;
+  left: 50%;
+  bottom: 50%;
+  top: 50%;
+  border-radius: 75%;
+  filter: blur(0.5px);
+  background: radial-gradient(white 80%, transparent);
+  animation: moveFlame 6s linear infinite, enlargeFlame 2s linear infinite, blinkIt 2s infinite;
+  position: fixed;
+  pointer-events: none;
+  z-index: 2; /* stacking order */
+}
+
+/* Soft glow around the flame */
+.flame:after {
+  width: 11.5px;
+  height: 11.5px;
+  border-radius: 100%;
+  box-shadow: 0 0 13px 0 rgba(247, 93, 0, .4), 0 0px 4px 0 rgba(247, 128, 0, .7);
+}
