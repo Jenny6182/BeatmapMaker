@@ -1,7 +1,7 @@
 
 // state.ts holds all the live data during editing
 
-import {Bubble, Section} from './types'
+import type {Bubble, Section} from './types'
 
 export let bubbles: Bubble[] = [] // array of all bubbles, including ones on time grid AND ones on canvas
 export let sections: Section[] = [] // array of all sections
