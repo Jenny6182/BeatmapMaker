@@ -10,9 +10,11 @@ Return Bubble[] — one bubble per note
 */
 
 
-import {Bubble} from './types'
+import type {Bubble} from './types'
 
-function parseMidi(midiJson: any): Bubble[] {
+export function parseMidi(midiJson: any): Bubble[] {
+    // Precondition: midiJson is an already parsed json object
+
     let bubbles: Bubble[] = []
 
     for (const track of midiJson.tracks) {
