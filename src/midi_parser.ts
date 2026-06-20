@@ -21,7 +21,7 @@ export function parseMidi(midiJson: any): Bubble[] {
         for (const note of track.notes) {
             // create new bubble
             const newBubble: Bubble = {
-                beatIndex: 0, // placeholder
+                beatIndex: null, // placeholder
                 sectionID: null,
                 time: note.time,
                 pitch: note.midi,
