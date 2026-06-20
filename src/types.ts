@@ -2,8 +2,8 @@
 // type.ts hold definition of all data types used in BeatmapMaker
 
 export type Bubble = {
-    beatIndex: number // unique identifier
-    sectionID: string | null // bubble should only belong to 0 or 1 section
+    beatIndex: number | null// unique identifier
+    sectionID: string | null // bubble should only belong to 0 or 1 sections
     time: number // in sec
     pitch: number // in... ?  0-127, where 60 is middle C
     duration: number // in sec
