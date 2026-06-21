@@ -63,26 +63,54 @@ export function addSection(name: string, start_beat: number, end_beat: number) {
 
     // push new section into sections array
     sections.push(newSection)
-
-    // check if there's any bubbles we need to change sectionID for
-    for (const bubble of bubbles) {
-        if (bubble.beatIndex === null) { // if unassigned (such as copied bubbles), skip
-            continue
-        }
-        else if ((bubble.beatIndex >= start_beat) && (bubble.beatIndex <= end_beat)) {
-            bubble.sectionID = newSection.id // use new section's id as this bubble's id
-        }
-    }
+    // update bubbles
+    updateAllBubbleSections()
 }
 
 export function editSection(section: Section, changes: {name?: string, start_beat?: number, end_beat?: number}) {
-
+    if (changes.name !== undefined) { // if new name is provided
+        section.name = changes.name
+    } if (changes.start_beat !== undefined) { // if new start beat is provided
+        section.start_beat = changes.start_beat
+    } if (changes.end_beat !== undefined) { // if new end beat is provided
+        section.end_beat = changes.end_beat
+    }
+    if ((changes.start_beat !== undefined) || (changes.end_beat !== undefined)) { 
+        // if start or end beat is provided, one of them must have changed
+        updateAllBubbleSections()
+    }
 }
 
-export function setActiveSection() {
+export function setActiveSection(section: Section) {
+    activeSectionID = section.id
+}  
 
+export function deleteSection(section: Section) {
+    sections = sections.filter(s => s !== section) // make a new section without the target delete section
+    updateAllBubbleSections()
 }
 
-export function deleteSection() {
 
+// Helper functions for updating bubble sections
+
+function updateBubbleSection(bubble: Bubble) {
+    if (bubble.beatIndex === null) return
+    // if unassigned (such as copied bubbles), skip
+
+    for (const section of sections) {
+        if ((bubble.beatIndex >= section.start_beat) && (bubble.beatIndex <= section.end_beat)) {
+            bubble.sectionID = section.id // use new section's id as this bubble's id
+            return 
+            // each bubble can only belong to one section, 
+            // so return after finding which section bubble belongs to
+        }
+    }
+
+    bubble.sectionID = null // else, bubble doesn't belong to any section, change it to null
+}
+
+function updateAllBubbleSections() {
+    for (const bubble of bubbles) {
+        updateBubbleSection(bubble)
+    }
 }
